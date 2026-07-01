@@ -95,7 +95,6 @@ function loadStats() {
       return { total: 0, today: 0, correctTotal: 0, lastDate: todayString() };
     }
     const parsed = JSON.parse(raw);
-    // jeżeli zmienił się dzień, zerujemy licznik "dzisiaj"
     if (parsed.lastDate !== todayString()) {
       parsed.today = 0;
       parsed.lastDate = todayString();
@@ -165,12 +164,27 @@ function startTimer() {
   }, 1000);
 }
 
+// lista pytań na aktualną sesję (unikalne w obrębie tematu)
+let sessionQuestions = [];
+
+function buildSessionQuestions() {
+  const topic = topicSelectEl.value;
+  const pool = topic === "all" ? questions.slice() : questions.filter(q => q.topic === topic);
+  // Tasowanie Fisher-Yates
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  // Bierzemy maksymalnie totalQuestions, ale nie więcej niż długość pool
+  sessionQuestions = pool.slice(0, Math.min(totalQuestions, pool.length));
+}
+
 function renderAnswers(question) {
   answersEl.innerHTML = "";
   question.answers.forEach((answersText, index) => {
     const btn = document.createElement("button");
     btn.className = "answer-tile";
-    btn.innerHTML = answersText; // MathJax ogarnie wzory
+    btn.innerHTML = answersText;
     btn.addEventListener("click", () => handleAnswerClick(index, question));
     answersEl.appendChild(btn);
   });
@@ -196,7 +210,6 @@ function finishQuestion(isCorrect) {
   const spent = 30 - timeLeft;
   totalTime += spent > 0 ? spent : 30;
 
-  // update lokalnych statystyk sesji
   if (isCorrect) {
     correctCount++;
     streak++;
@@ -206,7 +219,6 @@ function finishQuestion(isCorrect) {
   }
   updateProgress();
 
-  // update globalnych statystyk (navbar + localStorage)
   globalStats.total += 1;
   globalStats.today += 1;
   if (isCorrect) {
@@ -216,30 +228,34 @@ function finishQuestion(isCorrect) {
   updateNavbar();
 
   setTimeout(() => {
-    if (currentQuestion >= totalQuestions) {
+    if (currentQuestion >= sessionQuestions.length) {
       showSummary();
     } else {
       currentQuestion++;
-      pickQuestion();
+      showQuestion();
     }
   }, 700);
 }
 
-function pickQuestion() {
+function showQuestion() {
   summaryEl.hidden = true;
-  const topic = topicSelectEl.value;
-  const pool = topic === "all" ? questions : questions.filter(q => q.topic === topic);
-  const q = pool[Math.floor(Math.random() * pool.length)];
-  questionTextEl.innerHTML = q.text;
-  renderAnswers(q);
+  const q = sessionQuestions[currentQuestion - 1];
+  if (!q) {
+    // jeżeli coś poszło nie tak, zbuduj sesję od nowa
+    buildSessionQuestions();
+    currentQuestion = 1;
+  }
+  const question = sessionQuestions[currentQuestion - 1];
+  questionTextEl.innerHTML = question.text;
+  renderAnswers(question);
   startTimer();
   typesetMath();
 }
 
 function showSummary() {
   summaryEl.hidden = false;
-  const avgTime = totalTime / totalQuestions;
-  summaryCountEl.textContent = `Poprawne odpowiedzi: ${correctCount} / ${totalQuestions}`;
+  const avgTime = totalTime / sessionQuestions.length;
+  summaryCountEl.textContent = `Poprawne odpowiedzi: ${correctCount} / ${sessionQuestions.length}`;
   summaryTimeEl.textContent = `Średni czas na pytanie: ${avgTime.toFixed(1)} s`;
   summaryBestEl.textContent = `Najlepszy streak: ${bestStreak}`;
 }
@@ -250,14 +266,15 @@ function resetSession() {
   totalTime = 0;
   streak = 0;
   bestStreak = 0;
+  buildSessionQuestions();
   updateProgress();
-  pickQuestion();
+  showQuestion();
 }
 
 // eventy
 
 document.getElementById("next-btn").addEventListener("click", () => {
-  if (currentQuestion < totalQuestions) {
+  if (currentQuestion < sessionQuestions.length) {
     clearInterval(timerInterval);
     finishQuestion(false);
   }
@@ -273,5 +290,6 @@ summaryRestartBtn.addEventListener("click", () => {
 
 // start
 updateNavbar();
+buildSessionQuestions();
 updateProgress();
-pickQuestion();
+showQuestion();
