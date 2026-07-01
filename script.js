@@ -1,78 +1,73 @@
-// przykładowa baza pytań (do dalszego rozszerzania)
+// przykładowa baza pytań z notacją LaTeX (ładne indeksy górne/dolne)
 const questions = [
   {
-    topic: "logika",
-    text: "Które zdanie jest tautologią?",
-    answers: [
-      "p ∨ ¬p",
-      "p ∧ ¬p",
-      "p → p",
-      "¬(p ∨ q)"
-    ],
-    correctIndex: 0
-  },
-  {
-    topic: "logika",
-    text: "Jak nazywa się zdanie, które jest prawdziwe dla każdego wartościowania?",
-    answers: ["Sprzeczność", "Tautologia", "Spełnialne", "Równoważność"],
-    correctIndex: 1
-  },
-  {
     topic: "zbiory",
-    text: "Ile elementów ma iloczyn kartezjański A×B, jeśli |A| = 3 i |B| = 4?",
-    answers: ["7", "12", "3", "4"],
+    text: "Ile elementów ma iloczyn kartezjański $A\\times B$, jeśli $|A| = 3$ i $|B| = 4$?",
+    answers: ["$7$", "$12$", "$3$", "$4$"],
     correctIndex: 1
-  },
-  {
-    topic: "zbiory",
-    text: "Jak nazywa się zbiór wszystkich podzbiorów zbioru A?",
-    answers: ["Suma zbiorów", "Iloczyn zbiorów", "Zbiór potęgowy", "Dopełnienie"],
-    correctIndex: 2
   },
   {
     topic: "kombinatoryka",
-    text: "Ile permutacji ma zbiór 4-elementowy?",
-    answers: ["4", "8", "16", "24"],
-    correctIndex: 3
+    text: "Ile permutacji ma zbiór $n$-elementowy?",
+    answers: ["$2^n$", "$n!$", "$n^2$", "$n$"],
+    correctIndex: 1
   },
   {
-    topic: "macierze",
-    text: "Jaki wymiar ma macierz wynikowa przy mnożeniu macierzy A(m×n) i B(n×k)?",
-    answers: ["m×n", "n×k", "m×k", "k×m"],
-    correctIndex: 2
+    topic: "kombinatoryka",
+    text: "Symbol Newtona definiujemy wzorem $\\binom{n}{k} = \\dfrac{n!}{k!(n-k)!}$. Jaka jest wartość $\\binom{4}{2}$?",
+    answers: ["$4$", "$6$", "$8$", "$16$"],
+    correctIndex: 1
   },
   {
     topic: "ciagi",
-    text: "Jaki to ciąg: a_n = 3n + 2?",
-    answers: ["Geometryczny", "Arytmetyczny", "Stały", "Losowy"],
+    text: "Dany jest ciąg $(a_n)$ o wyrazie ogólnym $a_n = 3n + 2$. Jakiego typu jest to ciąg?",
+    answers: ["geometryczny", "arytmetyczny", "stały", "losowy"],
     correctIndex: 1
   },
   {
     topic: "granice",
-    text: "Co oznacza zapis lim_{n→∞} a_n = L?",
+    text: "Co oznacza zapis $\\lim_{n \\to \\infty} a_n = L$?",
     answers: [
-      "Ciąg jest rosnący",
-      "Ciąg jest malejący",
-      "Granica ciągu istnieje i równa jest L",
-      "Ciąg nie ma granicy"
+      "ciąg jest rosnący",
+      "ciąg jest malejący",
+      "granica ciągu istnieje i równa jest $L$",
+      "ciąg nie ma granicy"
     ],
     correctIndex: 2
   },
   {
     topic: "pochodne",
-    text: "Jaka jest pochodna funkcji f(x) = x^2?",
-    answers: ["2x", "x", "x^3", "1"],
+    text: "Jaka jest pochodna funkcji $f(x) = x^2$?",
+    answers: ["$2x$", "$x$", "$x^3$", "$1$"],
     correctIndex: 0
   },
   {
     topic: "pochodne",
-    text: "Co oznacza pochodna funkcji w punkcie x0?",
+    text: "Co oznacza pochodna funkcji w punkcie $x_0$?",
     answers: [
-      "Wartość funkcji w x0",
-      "Nachylenie stycznej w punkcie x0",
-      "Maksimum funkcji",
-      "Minimum funkcji"
+      "wartość funkcji w $x_0$",
+      "nachylenie stycznej w punkcie $x_0$",
+      "maksimum funkcji",
+      "minimum funkcji"
     ],
+    correctIndex: 1
+  },
+  {
+    topic: "macierze",
+    text: "Jaki wymiar ma macierz wynikowa przy mnożeniu macierzy $A_{m\\times n}$ i $B_{n\\times k}$?",
+    answers: ["$m\\times n$", "$n\\times k$", "$m\\times k$", "$k\\times m$"],
+    correctIndex: 2
+  },
+  {
+    topic: "ciagi",
+    text: "Ciąg $(a_n)$ jest zbieżny, jeśli istnieje $L \\in \\mathbb{R}$ takie, że $\\lim_{n \\to \\infty} a_n = L$. Jak nazywa się liczba $L$?",
+    answers: ["granica ciągu", "maksimum ciągu", "minimum ciągu", "wartość średnia ciągu"],
+    correctIndex: 0
+  },
+  {
+    topic: "granice",
+    text: "Dobrym przybliżeniem liczby $e$ jest:",
+    answers: ["$3{,}14$", "$2{,}71$", "$1{,}72$", "$0{,}33$"],
     correctIndex: 1
   }
 ];
@@ -94,6 +89,12 @@ const summaryCountEl = document.getElementById("summary-count");
 const summaryTimeEl = document.getElementById("summary-time");
 const summaryBestEl = document.getElementById("summary-best");
 const summaryRestartBtn = document.getElementById("summary-restart");
+
+function typesetMath() {
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise();
+  }
+}
 
 function updateProgress() {
   const progressText = document.getElementById("progress-text");
@@ -127,7 +128,7 @@ function renderAnswers(question) {
   question.answers.forEach((answersText, index) => {
     const btn = document.createElement("button");
     btn.className = "answer-tile";
-    btn.textContent = answersText;
+    btn.innerHTML = answersText; // ważne: innerHTML dla LaTeX
     btn.addEventListener("click", () => handleAnswerClick(index, question));
     answersEl.appendChild(btn);
   });
@@ -177,9 +178,10 @@ function pickQuestion() {
   const topic = topicSelectEl.value;
   const pool = topic === "all" ? questions : questions.filter(q => q.topic === topic);
   const q = pool[Math.floor(Math.random() * pool.length)];
-  questionTextEl.textContent = q.text;
+  questionTextEl.innerHTML = q.text; // LaTeX w pytaniu
   renderAnswers(q);
   startTimer();
+  typesetMath();
 }
 
 function showSummary() {
