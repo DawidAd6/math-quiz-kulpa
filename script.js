@@ -223,7 +223,7 @@ function updateProgress() {
 
 function startTimer() {
   clearInterval(timerInterval);
-  timeLeft = 30;
+  timeLeft = 500;
   const timerEl = document.getElementById("quiz-timer");
   timerEl.textContent = `⏱ ${timeLeft} s`;
 
