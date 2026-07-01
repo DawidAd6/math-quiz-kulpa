@@ -1,4 +1,4 @@
-/* --- responsywny layout i UI --- */
+/* --- responsywny layout i UI (fix: wyraźniejsze odpowiedzi) --- */
 :root {
   --bg: #050816;
   --card-bg: #0f172a;
@@ -29,7 +29,7 @@ body {
   padding: 20px 18px;
   background: linear-gradient(145deg, #0f172a 0%, #020617 100%);
   border-radius: 18px;
-  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.8), 0 0 0 1px rgba(148, 163, 184, 0.15);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.8), 0 0 0 1px rgba(148, 163, 184, 0.25);
 }
 
 @media (min-width: 768px) {
@@ -122,17 +122,18 @@ body {
   padding: 14px 12px;
   border-radius: 16px;
   background: #020617;
-  border: 1px solid rgba(148, 163, 184, 0.3);
+  border: 1px solid rgba(148, 163, 184, 0.4);
 }
 
 .question-text {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   font-size: 1rem;
 }
 
 .answers-grid {
   display: grid;
-  gap: 10px;
+  gap: 12px;
+  margin-top: 10px;
 }
 
 @media (min-width: 640px) {
@@ -140,27 +141,29 @@ body {
 }
 
 .answer-tile {
-  padding: 10px 12px;
+  padding: 14px 18px;
   border-radius: 14px;
   background: #020617;
-  border: 1px solid rgba(148, 163, 184, 0.5);
-  font-size: 0.9rem;
+  border: 2px solid rgba(148, 163, 184, 0.85);
+  font-size: 0.95rem;
+  color: var(--text-main);
   cursor: pointer;
-  transition: transform 0.08s ease, box-shadow 0.08s ease, border-color 0.15s ease, background 0.15s ease;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
 
 .answer-tile:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.7);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.9);
 }
 
 .answer-tile.correct {
   background: var(--accent-soft);
   border-color: var(--accent);
+  color: #bbf7d0;
 }
 
 .answer-tile.wrong {
-  background: rgba(239, 68, 68, 0.16);
+  background: rgba(239, 68, 68, 0.2);
   border-color: var(--error);
 }
 
