@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Matematyka dla inżynierów – Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Matematyka dla inżynierów – Quiz</h1>
+      <p>Quizy z wykładów (Semestr I–II) na bazie Kulpy.</p>
+    </header>
+
+    <main>
+      <section class="controls">
+        <label>
+          Wybierz temat:
+          <select id="topicSelect">
+            <option value="all">Wszystko</option>
+            <option value="logika">Elementy logiki matematycznej</option>
+            <option value="zbiory">Teoria zbiorów</option>
+            <option value="kombinatoryka">Kombinatoryka</option>
+            <option value="macierze">Macierze</option>
+            <option value="uklady">Układy równań liniowych</option>
+            <option value="ciagi">Ciągi liczbowe</option>
+            <option value="funkcje">Funkcje jednej zmiennej</option>
+            <option value="granice">Ciągłość i granice funkcji</option>
+            <option value="pochodne">Różniczkowalność</option>
+            <option value="ekstrema">Monotoniczność i ekstrema</option>
+            <option value="calki">Całki oznaczone i nieoznaczone</option>
+          </select>
+        </label>
+        <button id="nextBtn">Następne pytanie</button>
+      </section>
+
+      <section id="quizCard" class="quiz-card">
+        <div id="questionMeta" class="question-meta"></div>
+        <h2 id="questionText"></h2>
+        <ul id="answersList" class="answers-list"></ul>
+        <div id="feedback" class="feedback"></div>
+      </section>
+
+      <section class="stats">
+        <p>Poprawne: <span id="correctCount">0</span></p>
+        <p>Niepoprawne: <span id="wrongCount">0</span></p>
+      </section>
+    </main>
+
+    <footer>
+      <small>Źródło pytań: „Matematyka dla inżynierów – Quizy z wykładów, semestr I–II” (Kulpa).</small>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
