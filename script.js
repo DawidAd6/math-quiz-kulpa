@@ -92,16 +92,16 @@ function loadStats() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) {
-      return { total: 0, today: 0, correctTotal: 0, lastDate: todayString() };
+      return { totalSolved: 0, todaySolved: 0, correctTotal: 0, lastDate: todayString() };
     }
     const parsed = JSON.parse(raw);
     if (parsed.lastDate !== todayString()) {
-      parsed.today = 0;
+      parsed.todaySolved = 0;
       parsed.lastDate = todayString();
     }
     return parsed;
   } catch {
-    return { total: 0, today: 0, correctTotal: 0, lastDate: todayString() };
+    return { totalSolved: 0, todaySolved: 0, correctTotal: 0, lastDate: todayString() };
   }
 }
 
@@ -117,8 +117,10 @@ function todayString() {
 let globalStats = loadStats();
 
 function updateNavbar() {
-  if (navTotalEl) navTotalEl.textContent = String(globalStats.total);
-  if (navTodayEl) navTodayEl.textContent = String(globalStats.today);
+  // Pytania ogółem = ile pytań jest w bazie
+  if (navTotalEl) navTotalEl.textContent = String(questions.length);
+  // Rozwiązane dziś i razem poprawnych z localStorage
+  if (navTodayEl) navTodayEl.textContent = String(globalStats.todaySolved);
   if (navCorrectEl) navCorrectEl.textContent = String(globalStats.correctTotal);
 }
 
@@ -170,12 +172,10 @@ let sessionQuestions = [];
 function buildSessionQuestions() {
   const topic = topicSelectEl.value;
   const pool = topic === "all" ? questions.slice() : questions.filter(q => q.topic === topic);
-  // Tasowanie Fisher-Yates
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
   }
-  // Bierzemy maksymalnie totalQuestions, ale nie więcej niż długość pool
   sessionQuestions = pool.slice(0, Math.min(totalQuestions, pool.length));
 }
 
@@ -214,16 +214,14 @@ function finishQuestion(isCorrect) {
     correctCount++;
     streak++;
     bestStreak = Math.max(bestStreak, streak);
+    globalStats.correctTotal += 1;
   } else {
     streak = 0;
   }
   updateProgress();
 
-  globalStats.total += 1;
-  globalStats.today += 1;
-  if (isCorrect) {
-    globalStats.correctTotal += 1;
-  }
+  // aktualizacja liczby rozwiązanych dziś
+  globalStats.todaySolved += 1;
   saveStats(globalStats);
   updateNavbar();
 
@@ -241,7 +239,6 @@ function showQuestion() {
   summaryEl.hidden = true;
   const q = sessionQuestions[currentQuestion - 1];
   if (!q) {
-    // jeżeli coś poszło nie tak, zbuduj sesję od nowa
     buildSessionQuestions();
     currentQuestion = 1;
   }
