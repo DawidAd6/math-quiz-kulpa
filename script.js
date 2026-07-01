@@ -1,75 +1,196 @@
-// przykładowa baza pytań z notacją LaTeX (ładne indeksy górne/dolne)
+// pełna baza pytań oparta na question.md (tematy: logika, zbiory, kombinatoryka, macierze, układy równań, ciągi, funkcje, ciągłość, różniczkowalność, monotoniczność, całki, pochodne cząstkowe)
 const questions = [
+  // Test do wykładu nr 01 - Elementy logiki matematycznej
+  {
+    topic: "logika",
+    text: "Wskaż zdanie prawdziwe.",
+    answers: [
+      "dla każdej liczby rzeczywistej $x$ zachodzi $x^2 \\ge 10$",
+      "dla każdej liczby rzeczywistej $x$ zachodzi $x^2 \\ge 0$",
+      "istnieje liczba rzeczywista $x$ taka, dla której zachodzi $x^2 \\le -10$",
+      "istnieje liczba rzeczywista $x$ taka, dla której zachodzi $x^2 < 0$"
+    ],
+    correctIndex: 1
+  },
+  {
+    topic: "logika",
+    text: "Alternatywa zdań $p$ oraz $q$ to zdanie:",
+    answers: [
+      "$p$ lub $q$",
+      "$p$ wtedy i tylko wtedy, gdy $q$",
+      "jeżeli $p$, to $q$",
+      "$p$ i $q$"
+    ],
+    correctIndex: 0
+  },
+  {
+    topic: "logika",
+    text: "Wyrażenie logiczne $[\\sim (p \\lor q)] \\Leftrightarrow [(\\sim p) \\land (\\sim q)]$ to:",
+    answers: [
+      "prawo przemienności koniunkcji",
+      "prawo przemienności alternatywy",
+      "prawo kontrapozycji",
+      "prawo de Morgana"
+    ],
+    correctIndex: 3
+  },
+  {
+    topic: "logika",
+    text: "Zdanie $p \\land q$ jest prawdziwe tylko w przypadku, gdy:",
+    answers: [
+      "zdanie $p$ jest fałszywe, a zdanie $q$ jest prawdziwe",
+      "zdanie $p$ jest prawdziwe, a zdanie $q$ jest fałszywe",
+      "obydwa zdania $p$ oraz $q$ są prawdziwe",
+      "obydwa zdania $p$ oraz $q$ są fałszywe"
+    ],
+    correctIndex: 2
+  },
+  {
+    topic: "logika",
+    text: "W logice matematycznej liczba 0 określa:",
+    answers: ["prawdę", "fałsz"],
+    correctIndex: 1
+  },
+  {
+    topic: "logika",
+    text: "Zdanie $p \\to q$ jest fałszywe tylko w przypadku, gdy:",
+    answers: [
+      "zdanie $p$ jest fałszywe i zdanie $q$ jest prawdziwe",
+      "obydwa zdania $p$ i $q$ są fałszywe",
+      "zdanie $p$ jest prawdziwe i zdanie $q$ jest fałszywe",
+      "obydwa zdania $p$ i $q$ są prawdziwe"
+    ],
+    correctIndex: 2
+  },
+  {
+    topic: "logika",
+    text: "Zdanie: istnieje liczba rzeczywista $x$ taka, że dla każdej liczby rzeczywistej $y$ zachodzi równość $xy = 0$.",
+    answers: ["jest prawdziwe", "jest fałszywe"],
+    correctIndex: 0
+  },
+  {
+    topic: "logika",
+    text: "Zaprzeczeniem zdania: istnieje liczba naturalna $n$ taka, że $n^2 \\ge 10$; jest zdanie:",
+    answers: [
+      "dla każdej liczby naturalnej $n$ zachodzi $n^2 \\ge 10$",
+      "istnieje liczba naturalna $n$ taka, że $n^2 \\ge 10$",
+      "istnieje liczba naturalna $n$ taka, że $n^2 < 10$",
+      "dla każdej liczby naturalnej $n$ zachodzi $n^2 < 10$"
+    ],
+    correctIndex: 3
+  },
+  {
+    topic: "logika",
+    text: "Wskaż zdanie, które nie jest zdaniem logicznym.",
+    answers: [
+      "Liczba 21 dzieli się przez 5",
+      "Czy liczba 6 jest dzielnikiem liczby 18?",
+      "Iloczyn liczb 4 i 8 wynosi 32",
+      "Suma liczb 7 i 13 wynosi 20"
+    ],
+    correctIndex: 1
+  },
+  {
+    topic: "logika",
+    text: "Wskaż tautologię.",
+    answers: [
+      "$p \\land \\sim p$",
+      "$p \\Rightarrow \\sim p$",
+      "$p \\Leftrightarrow \\sim p$",
+      "$p \\lor \\sim p$"
+    ],
+    correctIndex: 3
+  },
+
+  // Test do wykładu nr 02 - Elementy teorii mnogości
   {
     topic: "zbiory",
-    text: "Ile elementów ma iloczyn kartezjański $A\\times B$, jeśli $|A| = 3$ i $|B| = 4$?",
-    answers: ["7", "12", "3", "4"],
-    correctIndex: 1
-  },
-  {
-    topic: "kombinatoryka",
-    text: "Ile permutacji ma zbiór $n$-elementowy?",
-    answers: ["$2^n$", "$n!$", "$n^2$", "$n$"],
-    correctIndex: 1
-  },
-  {
-    topic: "kombinatoryka",
-    text: "Symbol Newtona definiujemy wzorem $\\binom{n}{k} = \\dfrac{n!}{k!(n-k)!}$. Jaka jest wartość $\\binom{4}{2}$?",
-    answers: ["4", "6", "8", "16"],
-    correctIndex: 1
-  },
-  {
-    topic: "ciagi",
-    text: "Dany jest ciąg $(a_n)$ o wyrazie ogólnym $a_n = 3n + 2$. Jakiego typu jest to ciąg?",
-    answers: ["ciąg geometryczny", "ciąg arytmetyczny", "ciąg stały", "ciąg losowy"],
-    correctIndex: 1
-  },
-  {
-    topic: "granice",
-    text: "Co oznacza zapis $\\lim_{n \\to \\infty} a_n = L$?",
+    text: "Która z poniższych relacji nie zachodzi?",
     answers: [
-      "ciąg jest rosnący",
-      "ciąg jest malejący",
-      "ciąg ma granicę równą $L$",
-      "ciąg nie ma granicy"
-    ],
-    correctIndex: 2
-  },
-  {
-    topic: "pochodne",
-    text: "Jaka jest pochodna funkcji $f(x) = x^2$?",
-    answers: ["$2x$", "$x$", "$x^3$", "$1$"],
-    correctIndex: 0
-  },
-  {
-    topic: "pochodne",
-    text: "Co oznacza pochodna funkcji w punkcie $x_0$?",
-    answers: [
-      "wartość funkcji w $x_0$",
-      "nachylenie stycznej w punkcie $x_0$",
-      "maksimum funkcji",
-      "minimum funkcji"
+      "$\\mathbb{N} \\subset \\mathbb{Z}$",
+      "$\\mathbb{R} \\subset \\mathbb{N}$",
+      "$\\mathbb{Q} \\subset \\mathbb{R}$",
+      "$\\mathbb{N} \\subset \\mathbb{Q}$"
     ],
     correctIndex: 1
   },
   {
-    topic: "macierze",
-    text: "Jaki wymiar ma macierz wynikowa przy mnożeniu macierzy $A_{m\\times n}$ i $B_{n\\times k}$?",
-    answers: ["$m\\times n$", "$n\\times k$", "$m\\times k$", "$k\\times m$"],
+    topic: "zbiory",
+    text: "Iloczyn kartezjański zbiorów jest działaniem przemiennym.",
+    answers: ["Prawda", "Fałsz"],
+    correctIndex: 1
+  },
+  {
+    topic: "zbiory",
+    text: "Niech $A = \\{2\\}$ i $B = \\{3\\}$. Wówczas zbiór $A \\times B$ to:",
+    answers: [
+      "$\\{(3, 2)\\}$",
+      "$\\{(2, 3)\\}$",
+      "$\\{6\\}$",
+      "$\\{5\\}$"
+    ],
+    correctIndex: 1
+  },
+  {
+    topic: "zbiory",
+    text: "Niech $A = (-4, 5)$ i $B = [0, 9]$. Wówczas zbiór $A \\ackslash B$ to:",
+    answers: [
+      "$(-4, 9]$",
+      "$[0, 5)$",
+      "$[5, 9]$",
+      "$(-4, 0)$"
+    ],
+    correctIndex: 3
+  },
+  {
+    topic: "zbiory",
+    text: "Równość $(A \\cup B)' = A' \\cap B'$ to:",
+    answers: [
+      "prawo de Morgana",
+      "prawo rozdzielności dopełnienia względem sumy zbiorów",
+      "prawo łączności sumy zbiorów",
+      "prawo łączności mnożenia zbiorów",
+      "prawo podwójnego dopełnienia"
+    ],
+    correctIndex: 0
+  },
+  {
+    topic: "zbiory",
+    text: "Sumę zbiorów $A$ i $B$ oznaczamy symbolem:",
+    answers: ["$A \\oplus B$", "$A \\cap B$", "$A \\subset B$", "$A \\cup B$"],
+    correctIndex: 3
+  },
+  {
+    topic: "zbiory",
+    text: "Jeżeli zbiór $A$ ma 4 elementy, a zbiór $B$ ma 8 elementów, to liczba elementów zbioru $A \\times B$ wynosi:",
+    answers: ["4", "15", "32", "12"],
     correctIndex: 2
   },
   {
-    topic: "ciagi",
-    text: "Ciąg $(a_n)$ jest zbieżny, jeśli istnieje $L \\in \\mathbb{R}$ takie, że $\\lim_{n \\to \\infty} a_n = L$. Jak nazywa się liczba $L$?",
-    answers: ["granica ciągu", "maksimum ciągu", "minimum ciągu", "wartość średnia ciągu"],
-    correctIndex: 0
+    topic: "zbiory",
+    text: "Zbiór liczb naturalnych oznaczamy literą:",
+    answers: ["$\\mathbb{R}$", "$\\mathbb{Q}$", "$\\mathbb{Z}$", "$\\mathbb{N}$"],
+    correctIndex: 3
   },
   {
-    topic: "granice",
-    text: "Dobrym przybliżeniem liczby $e$ jest:",
-    answers: ["2,71", "3,14", "1,72", "0,33"],
-    correctIndex: 0
+    topic: "zbiory",
+    text: "Jeżeli $A = (-\\infty, 0]$ i $B = [8, \\infty)$, to $A \\cap B$ to:",
+    answers: [
+      "$(-\\infty, \\infty)$",
+      "$[0, 8]$",
+      "$\\varnothing$",
+      "$(0, 8)$"
+    ],
+    correctIndex: 2
+  },
+  {
+    topic: "zbiory",
+    text: "Interpretacją geometryczną zbioru $\\mathbb{R}^2$ jest:",
+    answers: ["kwadrat jednostkowy", "przestrzeń", "płaszczyzna", "prosta"],
+    correctIndex: 2
   }
+
+  // kolejne tematy (kombinatoryka, macierze, układy równań, ciągi, funkcje itd.) można dopisać analogicznie na podstawie question.md
 ];
 
 let currentQuestion = 1;
@@ -117,9 +238,7 @@ function todayString() {
 let globalStats = loadStats();
 
 function updateNavbar() {
-  // Pytania ogółem = ile pytań jest w bazie
   if (navTotalEl) navTotalEl.textContent = String(questions.length);
-  // Rozwiązane dziś i razem poprawnych z localStorage
   if (navTodayEl) navTodayEl.textContent = String(globalStats.todaySolved);
   if (navCorrectEl) navCorrectEl.textContent = String(globalStats.correctTotal);
 }
@@ -166,7 +285,6 @@ function startTimer() {
   }, 1000);
 }
 
-// lista pytań na aktualną sesję (unikalne w obrębie tematu)
 let sessionQuestions = [];
 
 function buildSessionQuestions() {
@@ -220,7 +338,6 @@ function finishQuestion(isCorrect) {
   }
   updateProgress();
 
-  // aktualizacja liczby rozwiązanych dziś
   globalStats.todaySolved += 1;
   saveStats(globalStats);
   updateNavbar();
