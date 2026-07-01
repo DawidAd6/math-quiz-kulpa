@@ -18,6 +18,11 @@
           <option value="all">Wszystkie tematy</option>
           <option value="logika">Logika</option>
           <option value="zbiory">Zbiory</option>
+          <option value="kombinatoryka">Kombinatoryka</option>
+          <option value="macierze">Macierze</option>
+          <option value="ciagi">Ciągi</option>
+          <option value="granice">Granice</option>
+          <option value="pochodne">Pochodne</option>
         </select>
         <button id="next-btn" class="quiz-button">Następne pytanie</button>
       </div>
@@ -38,6 +43,14 @@
     <div id="question-card" class="question-card">
       <div id="question-text" class="question-text">Ładowanie pytania...</div>
       <div class="answers-grid" id="answers"></div>
+    </div>
+
+    <div class="quiz-summary" id="quiz-summary" hidden>
+      <h2>Podsumowanie sesji</h2>
+      <p id="summary-count"></p>
+      <p id="summary-time"></p>
+      <p id="summary-best"></p>
+      <button class="quiz-button" id="summary-restart">Nowa sesja</button>
     </div>
   </div>
 

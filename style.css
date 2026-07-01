@@ -1,4 +1,4 @@
-/* --- nowy, responsywny layout --- */
+/* --- responsywny layout i UI --- */
 :root {
   --bg: #050816;
   --card-bg: #0f172a;
@@ -162,4 +162,16 @@ body {
 .answer-tile.wrong {
   background: rgba(239, 68, 68, 0.16);
   border-color: var(--error);
+}
+
+.quiz-summary {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(148, 163, 184, 0.3);
+  font-size: 0.9rem;
+}
+
+.quiz-summary h2 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
 }
