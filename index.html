@@ -20,50 +20,73 @@
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-  <div class="quiz-shell">
-    <div class="quiz-header">
-      <div>
-        <div class="quiz-title">Math Quiz Kulpa</div>
-        <div class="quiz-subtitle">Trening zadań z dyskretnej / analizy</div>
+  <div class="app-shell">
+    <div class="app-navbar">
+      <div class="app-navbar-left">
+        <div class="app-navbar-title">Math Quiz Kulpa</div>
+        <div class="app-navbar-subtitle">Twoje statystyki nauki</div>
       </div>
-      <div class="quiz-controls">
-        <select id="topic-select" class="quiz-select">
-          <option value="all">Wszystkie tematy</option>
-          <option value="logika">Logika</option>
-          <option value="zbiory">Zbiory</option>
-          <option value="kombinatoryka">Kombinatoryka</option>
-          <option value="macierze">Macierze</option>
-          <option value="ciagi">Ciągi</option>
-          <option value="granice">Granice</option>
-          <option value="pochodne">Pochodne</option>
-        </select>
-        <button id="next-btn" class="quiz-button">Następne pytanie</button>
-      </div>
-    </div>
-
-    <div class="quiz-progress">
-      <div class="quiz-progress-label">
-        <span id="progress-text">Pytanie 1 z 10</span>
-        <span id="streak-text">Streak: 0 🔥</span>
-      </div>
-      <div class="quiz-progress-bar">
-        <div id="progress-fill"></div>
+      <div class="app-navbar-stats">
+        <div class="app-stat-pill">
+          <span class="app-stat-label">Pytania ogółem:</span>
+          <span id="nav-total">0</span>
+        </div>
+        <div class="app-stat-pill">
+          <span class="app-stat-label">Rozwiązane dziś:</span>
+          <span id="nav-today">0</span>
+        </div>
+        <div class="app-stat-pill">
+          <span class="app-stat-label">Razem poprawnych:</span>
+          <span id="nav-correct">0</span>
+        </div>
       </div>
     </div>
 
-    <div class="quiz-timer" id="quiz-timer">⏱ 30 s</div>
+    <div class="quiz-shell">
+      <div class="quiz-header">
+        <div>
+          <div class="quiz-title">Math Quiz Kulpa</div>
+          <div class="quiz-subtitle">Trening zadań z dyskretnej / analizy</div>
+        </div>
+        <div class="quiz-controls">
+          <select id="topic-select" class="quiz-select">
+            <option value="all">Wszystkie tematy</option>
+            <option value="logika">Logika</option>
+            <option value="zbiory">Zbiory</option>
+            <option value="kombinatoryka">Kombinatoryka</option>
+            <option value="macierze">Macierze</option>
+            <option value="ciagi">Ciągi</option>
+            <option value="granice">Granice</option>
+            <option value="pochodne">Pochodne</option>
+          </select>
+          <button id="next-btn" class="quiz-button">Następne pytanie</button>
+        </div>
+      </div>
 
-    <div id="question-card" class="question-card">
-      <div id="question-text" class="question-text">Ładowanie pytania...</div>
-      <div class="answers-grid" id="answers"></div>
-    </div>
+      <div class="quiz-progress">
+        <div class="quiz-progress-label">
+          <span id="progress-text">Pytanie 1 z 10</span>
+          <span id="streak-text">Streak: 0 🔥</span>
+        </div>
+        <div class="quiz-progress-bar">
+          <div id="progress-fill"></div>
+        </div>
+      </div>
 
-    <div class="quiz-summary" id="quiz-summary" hidden>
-      <h2>Podsumowanie sesji</h2>
-      <p id="summary-count"></p>
-      <p id="summary-time"></p>
-      <p id="summary-best"></p>
-      <button class="quiz-button" id="summary-restart">Nowa sesja</button>
+      <div class="quiz-timer" id="quiz-timer">⏱ 30 s</div>
+
+      <div id="question-card" class="question-card">
+        <div id="question-text" class="question-text">Ładowanie pytania...</div>
+        <div class="answers-grid" id="answers"></div>
+      </div>
+
+      <div class="quiz-summary" id="quiz-summary" hidden>
+        <h2>Podsumowanie sesji</h2>
+        <p id="summary-count"></p>
+        <p id="summary-time"></p>
+        <p id="summary-best"></p>
+        <button class="quiz-button" id="summary-restart">Nowa sesja</button>
+      </div>
     </div>
   </div>
 

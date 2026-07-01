@@ -81,6 +81,48 @@ let bestStreak = 0;
 let timeLeft = 30;
 let timerInterval;
 
+// statystyki globalne w navbarze, trzymane w localStorage
+const navTotalEl = document.getElementById("nav-total");
+const navTodayEl = document.getElementById("nav-today");
+const navCorrectEl = document.getElementById("nav-correct");
+
+const STORAGE_KEY = "math-quiz-kulpa-stats";
+
+function loadStats() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      return { total: 0, today: 0, correctTotal: 0, lastDate: todayString() };
+    }
+    const parsed = JSON.parse(raw);
+    // jeżeli zmienił się dzień, zerujemy licznik "dzisiaj"
+    if (parsed.lastDate !== todayString()) {
+      parsed.today = 0;
+      parsed.lastDate = todayString();
+    }
+    return parsed;
+  } catch {
+    return { total: 0, today: 0, correctTotal: 0, lastDate: todayString() };
+  }
+}
+
+function saveStats(stats) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(stats));
+}
+
+function todayString() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+let globalStats = loadStats();
+
+function updateNavbar() {
+  if (navTotalEl) navTotalEl.textContent = String(globalStats.total);
+  if (navTodayEl) navTodayEl.textContent = String(globalStats.today);
+  if (navCorrectEl) navCorrectEl.textContent = String(globalStats.correctTotal);
+}
+
 const questionTextEl = document.getElementById("question-text");
 const answersEl = document.getElementById("answers");
 const topicSelectEl = document.getElementById("topic-select");
@@ -154,6 +196,7 @@ function finishQuestion(isCorrect) {
   const spent = 30 - timeLeft;
   totalTime += spent > 0 ? spent : 30;
 
+  // update lokalnych statystyk sesji
   if (isCorrect) {
     correctCount++;
     streak++;
@@ -162,6 +205,15 @@ function finishQuestion(isCorrect) {
     streak = 0;
   }
   updateProgress();
+
+  // update globalnych statystyk (navbar + localStorage)
+  globalStats.total += 1;
+  globalStats.today += 1;
+  if (isCorrect) {
+    globalStats.correctTotal += 1;
+  }
+  saveStats(globalStats);
+  updateNavbar();
 
   setTimeout(() => {
     if (currentQuestion >= totalQuestions) {
@@ -220,5 +272,6 @@ summaryRestartBtn.addEventListener("click", () => {
 });
 
 // start
+updateNavbar();
 updateProgress();
 pickQuestion();
