@@ -3,7 +3,7 @@ const questions = [
   {
     topic: "zbiory",
     text: "Ile elementów ma iloczyn kartezjański $A\\times B$, jeśli $|A| = 3$ i $|B| = 4$?",
-    answers: ["$7$", "$12$", "$3$", "$4$"],
+    answers: ["7", "12", "3", "4"],
     correctIndex: 1
   },
   {
@@ -15,13 +15,13 @@ const questions = [
   {
     topic: "kombinatoryka",
     text: "Symbol Newtona definiujemy wzorem $\\binom{n}{k} = \\dfrac{n!}{k!(n-k)!}$. Jaka jest wartość $\\binom{4}{2}$?",
-    answers: ["$4$", "$6$", "$8$", "$16$"],
+    answers: ["4", "6", "8", "16"],
     correctIndex: 1
   },
   {
     topic: "ciagi",
     text: "Dany jest ciąg $(a_n)$ o wyrazie ogólnym $a_n = 3n + 2$. Jakiego typu jest to ciąg?",
-    answers: ["geometryczny", "arytmetyczny", "stały", "losowy"],
+    answers: ["ciąg geometryczny", "ciąg arytmetyczny", "ciąg stały", "ciąg losowy"],
     correctIndex: 1
   },
   {
@@ -30,7 +30,7 @@ const questions = [
     answers: [
       "ciąg jest rosnący",
       "ciąg jest malejący",
-      "granica ciągu istnieje i równa jest $L$",
+      "ciąg ma granicę równą $L$",
       "ciąg nie ma granicy"
     ],
     correctIndex: 2
@@ -67,8 +67,8 @@ const questions = [
   {
     topic: "granice",
     text: "Dobrym przybliżeniem liczby $e$ jest:",
-    answers: ["$3{,}14$", "$2{,}71$", "$1{,}72$", "$0{,}33$"],
-    correctIndex: 1
+    answers: ["2,71", "3,14", "1,72", "0,33"],
+    correctIndex: 0
   }
 ];
 
@@ -128,7 +128,7 @@ function renderAnswers(question) {
   question.answers.forEach((answersText, index) => {
     const btn = document.createElement("button");
     btn.className = "answer-tile";
-    btn.innerHTML = answersText; // ważne: innerHTML dla LaTeX
+    btn.innerHTML = answersText; // MathJax ogarnie wzory
     btn.addEventListener("click", () => handleAnswerClick(index, question));
     answersEl.appendChild(btn);
   });
@@ -178,7 +178,7 @@ function pickQuestion() {
   const topic = topicSelectEl.value;
   const pool = topic === "all" ? questions : questions.filter(q => q.topic === topic);
   const q = pool[Math.floor(Math.random() * pool.length)];
-  questionTextEl.innerHTML = q.text; // LaTeX w pytaniu
+  questionTextEl.innerHTML = q.text;
   renderAnswers(q);
   startTimer();
   typesetMath();
